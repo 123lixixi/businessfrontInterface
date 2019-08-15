@@ -11,4 +11,5 @@ public class ResponseCode {
      * 失败时通用状态码
      * */
     public static final int ERROR=100;
+
 }

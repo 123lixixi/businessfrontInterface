@@ -50,11 +50,21 @@
       <if test="user.password!=null and user.password!=''">
         password = #{user.password,jdbcType=VARCHAR},
       </if>
-      email = #{user.email,jdbcType=VARCHAR},
-      phone = #{user.phone,jdbcType=VARCHAR},
-      question = #{user.question,jdbcType=VARCHAR},
-      answer = #{user.answer,jdbcType=VARCHAR},
-      role = #{user.role,jdbcType=INTEGER},
+      <if test="user.email!=null and user.email!=''">
+        email = #{user.email,jdbcType=VARCHAR},
+      </if>
+      <if test="user.phone!=null and user.phone!=''">
+        phone = #{user.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="user.question!=null and user.question!=''">
+        question = #{user.question,jdbcType=VARCHAR},
+      </if>
+      <if test="user.answer!=null and user.answer!=''">
+        answer = #{user.answer,jdbcType=VARCHAR},
+      </if>
+      <if test="user.role!=null and user.role!=''">
+        role = #{user.role,jdbcType=INTEGER},
+      </if>
       update_time = now()
     </set>
     where id = #{user.id,jdbcType=INTEGER}
@@ -87,4 +97,21 @@
     select id,username,password,email,phone,question,answer,role,create_time,
     update_time from neuedu_user where username=#{user.username} and password=#{user.password}
   </select>
+  <select id="existsEmail" parameterType="string" resultType="int">
+    select count(*) from neuedu_user where email=#{email}
+  </select>
+  <select id="selectQuestionByUsername" parameterType="com.neuedu.pojo.UserInfo" resultType="string">
+    select question
+    from neuedu_user
+    where username=#{username}
+  </select>
+  <select id="selectByUsernameAndQuestionAndAnswer" parameterType="map" resultType="int">
+  select count(*) from neuedu_user
+  where username=#{username}and question=#{question}and answer=#{answer}
+  </select>
+  <update id="updateUserpassword" parameterType="map" >
+    UPDATE neuedu_user
+    set password=#{password},update_time=now()
+    where username=#{username}
+  </update>
 </mapper>

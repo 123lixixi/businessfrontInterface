@@ -11,26 +11,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
     @Autowired
+    AppConfig appConfig;
+    @Autowired
     IUserService userService;
-    @RequestMapping("/login")
-    public UserInfo login(UserInfo userInfo){
-        UserInfo userInfo1=userService.login(userInfo);
-        return userInfo1;
-    }
+
 //    @Value("${jdbc.driver}")
 //   private String driver;
 //    @Value("${jdbc.username}")
 //    private String username;
 //    @Value("${jdbc.password}")
 //    private String password;
-    @Autowired
-    AppConfig appConfig;
+
     @RequestMapping("/test")
     public String getDriver(){
       return appConfig.getDriver()+" "+appConfig.getUsername()+" "+appConfig.getPassword();
     }
     @RequestMapping("/res")
     public ServerResponse ress(){
-        return ServerResponse.createServerResponseBySucess(null,"hello");
+        return ServerResponse.createServerResponseBySucess("");
     }
 }

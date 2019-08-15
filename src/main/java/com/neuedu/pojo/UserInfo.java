@@ -1,8 +1,9 @@
 package com.neuedu.pojo;
 
 
-import java.util.Date;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import java.util.Date;
 
 public class UserInfo {
     /**
