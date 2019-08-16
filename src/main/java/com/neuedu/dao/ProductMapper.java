@@ -53,5 +53,11 @@ public interface ProductMapper {
      * */
     List<Product> searchProduct(@Param("integerSet") Set<Integer> integerSet,
                                 @Param("keyword") String keyword);
+    /**
+     * 查询最新、最热、轮播图
+     */
+    List<Product> searchnewAndHotAndbanner(@Param("is_new")int is_new,
+                                           @Param("is_hot")int is_hot,
+                                           @Param("is_banner")int is_banner);
 
 }

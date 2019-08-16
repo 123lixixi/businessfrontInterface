@@ -12,8 +12,8 @@ public class CartProductVO {
     private String productName;
     private String productSubtitle;
     private String productMainImage;
-    private String productPrice;
-    private String productStatus;
+    private BigDecimal productPrice;
+    private Integer productStatus;
     private BigDecimal productTotalPrice;
     private Integer productStock;
     private Integer productChecked;
@@ -75,19 +75,19 @@ public class CartProductVO {
         this.productMainImage = productMainImage;
     }
 
-    public String getProductPrice() {
+    public BigDecimal getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(String productPrice) {
+    public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
     }
 
-    public String getProductStatus() {
+    public Integer getProductStatus() {
         return productStatus;
     }
 
-    public void setProductStatus(String productStatus) {
+    public void setProductStatus(Integer productStatus) {
         this.productStatus = productStatus;
     }
 

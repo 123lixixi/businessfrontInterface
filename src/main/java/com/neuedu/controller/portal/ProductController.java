@@ -1,17 +1,22 @@
 package com.neuedu.controller.portal;
 
 import com.neuedu.common.ServerResponse;
+import com.neuedu.dao.ProductMapper;
+import com.neuedu.pojo.Product;
 import com.neuedu.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/product")
 public class ProductController {
     @Autowired
     IProductService productService;
+
     /**
      * 商品详情
      * */
@@ -39,4 +44,5 @@ public class ProductController {
    ServerResponse topcategory(@RequestParam(name="sid",defaultValue = "0",required = false)Integer sid){
         return productService.topcategory(sid);
     }
+
 }

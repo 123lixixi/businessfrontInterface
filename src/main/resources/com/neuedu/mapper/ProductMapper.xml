@@ -142,5 +142,21 @@
       </if>
     </where>
   </select>
+  <select id="searchnewAndHotAndbanner" parameterType="map" resultMap="BaseResultMap">
+    select id, category_id, name, subtitle, main_image, price, stock, status, create_time,
+    update_time, sub_images, detail,is_new,is_hot,is_banner
+    from neuedu_product
+    <where>
+      <if test="is_new!=''and is_new!=null">
+        and is_new=#{is_new}
+      </if>
+      <if test="is_hot!=''and is_hot!=null">
+        and is_hot=#{is_hot}
+      </if>
+      <if test="is_banner!=''and is_banner!=null">
+        and is_banner=#{is_banner}
+      </if>
+    </where>
+  </select>
 
 </mapper>

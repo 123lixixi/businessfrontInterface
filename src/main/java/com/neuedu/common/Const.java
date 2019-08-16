@@ -30,6 +30,34 @@ public class Const {
             this.desc=desc;
         }
     }
+    public enum CartCheckedEnum{
+        PRODUCT_CHECKED(1,"已勾选"),
+        PRODUCT_UNCHECKED(0,"未勾选");
+        private int code;
+
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
+
+        private String desc;
+        private CartCheckedEnum(int code, String desc){
+            this.code=code;
+            this.desc=desc;
+        }
+
+    }
     public enum ResponseCodeEnum{
         NEED_LOGIN(2,"需要登录"),
         NO_PRIVILEGE(3,"没有权限操作");
