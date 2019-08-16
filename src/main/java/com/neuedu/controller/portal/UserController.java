@@ -28,7 +28,7 @@ public class UserController {
     public ServerResponse login(UserInfo userInfo, HttpSession session, HttpServletResponse response){
 
         userInfo.setPassword(MD5Utils.getMD5Code(userInfo.getPassword()));
-        ServerResponse serverResponse=userService.login(userInfo);
+        ServerResponse serverResponse=userService.login(userInfo,1);
         if(serverResponse.isSucess()){
             UserInfo userInfo1=(UserInfo)serverResponse.getData();
             session.setAttribute(Const.CURRENT_USER,userInfo1);
@@ -86,12 +86,14 @@ public class UserController {
     @RequestMapping("/get_user_info")
     public ServerResponse get_user_info(HttpSession session){
         UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
+        session.setAttribute(Const.CURRENT_USER,userInfo);
         if(userInfo!=null){
-            userInfo.setPassword("");
-            userInfo.setQuestion("");
-            userInfo.setAnswer("");
-            userInfo.setRole(null);
-          return  ServerResponse.createServerResponseBySucess(userInfo);
+            UserInfo userInfo1=userService.findUserInfoById(userInfo.getId());
+            userInfo1.setPassword(null);
+            userInfo1.setQuestion(null);
+            userInfo1.setAnswer(null);
+            userInfo1.setRole(null);
+          return  ServerResponse.createServerResponseBySucess(userInfo1);
         }
            return ServerResponse.createServerResponseByFail("用户未登录，无法获取当前用户信息");
 }
@@ -129,8 +131,9 @@ public class UserController {
     public ServerResponse get_inforamtion(HttpSession session){
         UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
         if(userInfo!=null){
-           // userInfo.setPassword("");
-            return  ServerResponse.createServerResponseBySucess(userInfo);
+            UserInfo userInfo1=userService.findUserInfoById(userInfo.getId());
+            userInfo1.setPassword(null);
+            return  ServerResponse.createServerResponseBySucess(userInfo1);
         }
         return ServerResponse.createServerResponseByFail("用户未登录，无法获取当前用户信息");
     }

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface IUserService {
-    public ServerResponse login(UserInfo userInfo) throws MyException;
+    public ServerResponse login(UserInfo userInfo,int role) throws MyException;
     /**
      * 查询用户
      * */
@@ -50,5 +50,5 @@ public interface IUserService {
      * 登录状态更新个人信息
      * */
     ServerResponse update_information(String email, String phone,String question,String answer,HttpSession session);
-
+    ServerResponse list(Integer pageNum,Integer pageSize);
 }

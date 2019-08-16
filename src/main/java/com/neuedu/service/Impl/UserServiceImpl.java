@@ -1,5 +1,7 @@
 package com.neuedu.service.Impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.neuedu.annotation.MD5Utils;
 import com.neuedu.annotation.TokenCache;
 import com.neuedu.common.Const;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,7 +23,8 @@ public class UserServiceImpl implements IUserService {
    @Autowired
    UserInfoMapper userInfoMapper;
     @Override
-    public ServerResponse login(UserInfo userInfo) throws MyException {
+    public ServerResponse login(UserInfo userInfo,int role) throws MyException {
+
         //step1:参数的非空判断
         if(userInfo.getUsername()==null||userInfo.getUsername().equals("")){
             return ServerResponse.createServerResponseByFail("用户名不能为空");
@@ -39,9 +43,13 @@ public class UserServiceImpl implements IUserService {
           if(userInfo1==null)
               return ServerResponse.createServerResponseByFail("密码不正确");
         //step4:判断权限
-        if(userInfo1.getRole()!=1){//不是用户
-            return ServerResponse.createServerResponseByFail("没有用户权限");
+
+            if(userInfo1.getRole()==0&&role==1){//不是用户
+                return ServerResponse.createServerResponseByFail("没有用户权限");
         }
+            if(userInfo1.getRole()==1&&role==0){//不是管理员
+                return ServerResponse.createServerResponseByFail("没有管理员权限");}
+
         return ServerResponse.createServerResponseBySucess(userInfo1);
     }
 
@@ -263,5 +271,19 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createServerResponseBySucess("更新个人信息成功");
         }
      return ServerResponse.createServerResponseByFail("更新个人信息失败");
+    }
+
+    @Override
+    public ServerResponse list(Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum,pageSize);
+        List<UserInfo> userInfoList=userInfoMapper.selectAll();
+        Iterator<UserInfo> userInfoIterator = userInfoList.iterator();
+        while (userInfoIterator.hasNext()){
+            UserInfo userInfo = userInfoIterator.next();
+            userInfo.setPassword("");
+        }
+        PageInfo pageInfo = new PageInfo(userInfoList);
+        return ServerResponse.createServerResponseBySucess(pageInfo);
+
     }
 }
