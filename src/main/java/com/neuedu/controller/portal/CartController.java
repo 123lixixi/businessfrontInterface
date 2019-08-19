@@ -25,4 +25,98 @@ public class CartController {
         }
         return cartService.add(userInfo.getId(),productId,count);
     }
+    /**
+     * 购物车列表
+     */
+    @RequestMapping("/list")
+    public ServerResponse list(HttpSession session, Integer productId, Integer count){
+        UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
+        if(userInfo==null){
+            return ServerResponse.createServerResponseByFail("需要登录");
+        }
+        return cartService.list(userInfo.getId());
+    }
+    /**
+     * 更新购物车中某个商品数量
+     */
+    @RequestMapping("/update")
+    public ServerResponse update(HttpSession session, Integer productId, Integer count){
+        UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
+        if(userInfo==null){
+            return ServerResponse.createServerResponseByFail("需要登录");
+        }
+        return cartService.update(userInfo.getId(),productId,count);
+    }
+    /**
+     * 移除购物车某个产品
+     */
+    @RequestMapping("/delete_product")
+    public ServerResponse delete_product(HttpSession session, String productIds){
+        UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
+        if(userInfo==null){
+            return ServerResponse.createServerResponseByFail("需要登录");
+        }
+        return cartService.delete_product(userInfo.getId(),productIds);
+    }
+    /**
+     * 购物车选中某个商品
+     */
+    @RequestMapping("/select")
+    public ServerResponse select(HttpSession session, Integer productId){
+        UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
+        if(userInfo==null){
+            return ServerResponse.createServerResponseByFail("需要登录");
+        }
+        if(productId==null){
+            return ServerResponse.createServerResponseByFail("参数不能为空");
+        }
+        return cartService.select(userInfo.getId(),productId,Const.CartCheckedEnum.PRODUCT_CHECKED.getCode());
+    }
+    /**
+     * 购物车取消选中某个商品
+     */
+    @RequestMapping("/un_select")
+    public ServerResponse un_select(HttpSession session, Integer productId){
+        UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
+        if(userInfo==null){
+            return ServerResponse.createServerResponseByFail("需要登录");
+        }
+        if(productId==null){
+            return ServerResponse.createServerResponseByFail("参数不能为空");
+        }
+        return cartService.select(userInfo.getId(),productId,Const.CartCheckedEnum.PRODUCT_UNCHECKED.getCode());
+    }
+    /**
+     * 购物车全选
+     */
+    @RequestMapping("/select_all")
+    public ServerResponse select_all(HttpSession session){
+        UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
+        if(userInfo==null){
+            return ServerResponse.createServerResponseByFail("需要登录");
+        }
+        return cartService.select(userInfo.getId(),null,Const.CartCheckedEnum.PRODUCT_CHECKED.getCode());
+    }
+    /**
+     * 购物车取消全选
+     */
+    @RequestMapping("/un_select_all")
+    public ServerResponse un_select_all(HttpSession session){
+        UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
+        if(userInfo==null){
+            return ServerResponse.createServerResponseByFail("需要登录");
+        }
+        return cartService.select(userInfo.getId(),null,Const.CartCheckedEnum.PRODUCT_UNCHECKED.getCode());
+    }
+    /**
+     * 查询在购物车里的产品数量
+     */
+    @RequestMapping("/get_cart_product_count")
+    public ServerResponse get_cart_product_count(HttpSession session){
+        UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
+        if(userInfo==null){
+            return ServerResponse.createServerResponseByFail("需要登录");
+        }
+        return cartService.get_cart_product_count(userInfo.getId());
+    }
 }

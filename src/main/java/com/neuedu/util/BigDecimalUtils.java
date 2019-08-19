@@ -1,5 +1,6 @@
 package com.neuedu.util;
 
+import java.beans.BeanInfo;
 import java.math.BigDecimal;
 
 /**
