@@ -49,7 +49,6 @@ public interface OrderItemMapper {
      *订单明细批量插入
      */
     int insertBatch(List<OrderItem> orderItemList);
-    List<OrderItem> selectAllByOrderNo(@Param("orderNo")Long orderNo,
-                                       @Param("userId")Integer userId);
+    List<OrderItem> selectAllByOrderNo(@Param("orderNo")Long orderNo);
     int deleteOrderItemsByOrderNo(Long orderNo);
 }

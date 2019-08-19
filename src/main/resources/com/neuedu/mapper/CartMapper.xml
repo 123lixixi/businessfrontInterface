@@ -106,6 +106,7 @@
       <if test="productId!=null">
         and product_id=#{productId}
       </if>
+      and user_id=#{userId}
     </where>
   </update>
   <select id="get_cart_product_count" parameterType="int" resultType="int" >

@@ -48,4 +48,5 @@ public interface OrderMapper {
     List<Order> selectAllByUserId(Integer userId);
     Order selectByOrderNo(@Param("orderNo") Long OrderNo, @Param("userId") Integer userId);
     int deleteOrderByOrderNo(Long orderNo);
+    Order selectOne(Long orderNo);
 }

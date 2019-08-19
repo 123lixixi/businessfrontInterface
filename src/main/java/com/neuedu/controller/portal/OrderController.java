@@ -63,4 +63,27 @@ public class OrderController {
         }
         return orderService.cancel(userInfo.getId(),orderNo);
     }
+    /**
+     * 获取订单的商品信息
+     */
+    @RequestMapping("/get_order_cart_product")
+    public ServerResponse get_order_cart_product(HttpSession session){
+        UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
+        if(userInfo==null){
+            return ServerResponse.createServerResponseByFail("需要登录");
+        }
+        return orderService.get_order_cart_product(userInfo.getId());
+    }
+    /**
+     * 支付接口
+     */
+    @RequestMapping("/pay")
+    public ServerResponse pay(HttpSession session,Long orderNo){
+        UserInfo userInfo=(UserInfo)session.getAttribute(Const.CURRENT_USER);
+        if(userInfo==null){
+            return ServerResponse.createServerResponseByFail("需要登录");
+        }
+
+        return null;
+    }
 }
